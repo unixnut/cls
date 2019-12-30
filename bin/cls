@@ -94,6 +94,6 @@ fi |
   { if [ "$compact" = y ] ; then
       cat
     else
-      python3 -m cls.cls $size_column $inums $ownership_cols
+      python3 -m colorls.colorls $size_column $inums $ownership_cols
     fi ; } |
   less -RS --prompt=M"[%pB\\%] ${*//./\\.}"

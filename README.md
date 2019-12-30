@@ -18,6 +18,27 @@ Each command is equivalent to:-
     csalls   sudo ls -lFA --time-style=long-iso
     csallls  sudo ls -lFA --time-style=full-iso
 
+Development
+-----------
+
+Package dependencies are handled by [pipenv](https://pipenv.kennethreitz.org/).
+It is assumed that *pipenv* will manage the installation of all concrete
+dependency versions.  setup.py reads the dependency info from Pipfile
+via the `pipenv` pacakge.
+
+Before you can build the package, you will have to have `make`
+installed.  You can then run **`make setup`** to create a [Virtualenv][]
+(the `.venv` subdirectory where packages and metadata will be installed)
+and then **`. .venv/bin/activate`** to activate it.
+
+Then you can run **`pip install pipenv wheel`** and then use a build
+process such as:-
+
+    make build
+    make dist
+    # ... test .whl file now ...
+    make release
+
 Credits
 -------
 
@@ -26,4 +47,4 @@ project template.
 
   [Cookiecutter]: https://github.com/audreyr/cookiecutter
   [pp]: https://github.com/audreyr/cookiecutter-pypackage
-
+  [Virtualenv]: http://packaging.python.org/guides/installing-using-pip-and-virtual-environments
