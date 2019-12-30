@@ -56,7 +56,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 cls tests
+	flake8 colorls tests
 
 test: ## run tests quickly with the default Python
 	$(PYTHON) setup.py test
@@ -65,15 +65,15 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source cls setup.py test
+	coverage run --source colorls setup.py test
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/cls.rst
+	rm -f docs/colorls.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ cls
+	sphinx-apidoc -o docs/ colorls
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
@@ -81,7 +81,7 @@ docs: ## generate Sphinx HTML documentation, including API docs
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-sign: dist/cls-$(VERSION)-py3-none-any.whl.asc dist/cls-$(VERSION).tar.gz.asc
+sign: dist/colorls-$(VERSION)-py3-none-any.whl.asc dist/colorls-$(VERSION).tar.gz.asc
 
 %.asc: %
 	gpg --detach-sign -a $<
