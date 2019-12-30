@@ -55,7 +55,7 @@ class CustomDevelopCommand(develop):
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
-setup_requirements = [ ]
+setup_requirements = ['bumpversion']
 
 setup(
     author="Alastair Irvine",
@@ -63,15 +63,19 @@ setup(
     python_requires='>=3.5',
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Intended Audience :: End Users',
+        'Intended Audience :: End Users/Desktop',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        'Environment :: Console',
+        'Topic :: Utilities',
+        'Operating System :: POSIX :: Linux',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Unix Shell',
     ],
     description="c*ls commands that use colour and pipe output to less, with a sensible prompt",
     install_requires=requirements,
@@ -80,8 +84,8 @@ setup(
     long_description_content_type='text/markdown',
     include_package_data=True,
     keywords='cls, ls, less, colour, color',
-    name='cls',
-    packages=find_packages(include=['cls', 'cls.*']),
+    name='colorls',
+    packages=find_packages(include=['colorls', 'colorls.*']),
     scripts=['bin/cls'],
     cmdclass={
         'install_scripts': CustomInstallScriptsCommand,

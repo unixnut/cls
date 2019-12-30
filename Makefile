@@ -1,5 +1,7 @@
-.PHONY: build clean clean-test clean-pyc clean-build docs help
+.PHONY: build clean clean-test clean-pyc clean-build docs help sign
 .DEFAULT_GOAL := help
+
+VERSION = 1.0.0
 
 PYTHON=python3
 PIPENV_VENV_IN_PROJECT=y
@@ -79,7 +81,12 @@ docs: ## generate Sphinx HTML documentation, including API docs
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-release: dist ## package and upload a release
+sign: dist/cls-$(VERSION)-py3-none-any.whl.asc dist/cls-$(VERSION).tar.gz.asc
+
+%.asc: %
+	gpg --detach-sign -a $<
+
+release: sign ## upload an already packaged release
 	twine upload dist/*
 
 .PHONY: build
