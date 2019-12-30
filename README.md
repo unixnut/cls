@@ -18,6 +18,14 @@ Each command is equivalent to:-
     csalls   sudo ls -lFA --time-style=long-iso
     csallls  sudo ls -lFA --time-style=full-iso
 
+Installation
+------------
+
+  1. Run **`pip3 -V`**
+  1. If you get a *Command not found* error, run **`sudo apt install python3-pip`** and redo from start
+  1. If your *pip* major version is less than 9, run **`pip3 install -U pip && hash -r`**
+  1. Run **`pip3 install colorls`** 
+
 Development
 -----------
 
