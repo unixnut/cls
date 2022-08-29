@@ -2,4 +2,10 @@
 
 __author__ = """Alastair Irvine"""
 __email__ = 'alastair@plug.org.au'
-__version__ = '1.0.2'
+__version__ = '1.1.0'
+
+
+
+# *** DEFINITIONS ***
+size_col_width = 12
+ownership_col_width = 11

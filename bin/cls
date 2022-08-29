@@ -19,14 +19,6 @@
 #     You can find the complete text of the GPLv2 in the file
 #     /usr/share/common-licenses/GPL-2 on Debian systems.
 #     Or see the file COPYING in the same directory as this program.
-#
-#
-# TO-DO:
-#   + Truncate owner/group as needed to fit within MULTI_COL_WIDTH
-#   + LINK_COL_WIDTH
-#   + Fix inum handling
-#   + Check for numeric owner/group
-#   + Use `type -a python3` and `unset VIRTUAL_ENV` when in a venv to break out of it
 
 
 self=`basename "$0"`
@@ -89,12 +81,16 @@ let size_column=5+extra_cols
 let before_size_column=size_column-1
 if [ -n "$sudo" ] ; then
   sudo ls $short_opts --group-directories-first --color=always $long_opts "${f[@]}"
+  exit_code=$?
 else
   ls $short_opts --group-directories-first --color=always $long_opts "${f[@]}"
+  exit_code=$?
 fi |
   { if [ "$compact" = y ] ; then
       cat
     else
-      python3 -m colorls.cli $size_column $inums $ownership_cols
+      python3 -m colorls.cli $size_column $inums $ownership_cols $human
     fi ; } |
   less -RS --prompt=M"[%pB\\%] ${*//./\\.}"
+
+exit $exit_code

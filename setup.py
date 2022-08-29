@@ -8,7 +8,10 @@ from setuptools.command.install_scripts import install_scripts
 from setuptools.command.develop import develop
 
 from pipenv.project import Project
-from pipenv.utils import convert_deps_to_pip
+try:
+    from pipenv.utils.dependencies import convert_deps_to_pip
+except ImportError:
+    from pipenv.utils import convert_deps_to_pip
 
 
 pfile = Project(chdir=False).parsed_pipfile
@@ -96,6 +99,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/unixnut/cls',
-    version='1.0.2',
+    version='1.1.0',
     zip_safe=False,
 )

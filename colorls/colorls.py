@@ -1,36 +1,45 @@
 """Main module."""
 
 import re
+from typing import Dict, Tuple, List, Union, AnyStr, Iterable, Callable, Type, Optional
 
-SIZE_COL_WIDTH = 12
-MULTI_COL_WIDTH = 20 + SIZE_COL_WIDTH
+import colored
+
+from . import size_col_width, ownership_col_width
+
+## MULTI_COL_WIDTH = 20 + SIZE_COL_WIDTH
 
 ISDIR_REGEX = re.compile(r"\s*d")
 
 
 # == Interface functions ==
-def cols_format(cols, ownership_cols, size_column, dir_column, blend):
+def cols_format(cols: int, ownership_cols: int, size_column: int, dir_column: int) -> str:
     size_str = cols[size_column].strip()
+    # Pad based on the actual width, not the number of characters (as they
+    # include zero-width highlighting data)
+    padding = " " * (size_col_width - len(size_str))
     if ISDIR_REGEX.match(cols[dir_column]):
+        # Don't highlight directory sizes
         size_output = size_str
     else:
         size_output = colorise(size_str)
     if ownership_cols == 0:
-        # no owner/group column blending for size
-        return "%s %*s%s" % ("".join(cols[0:size_column]), SIZE_COL_WIDTH,
-                             size_output, "".join(cols[size_column+1:]))
+        # no owner/group columns
+        return "%s %s%s" % ("".join(cols[0:size_column]), padding + size_output,
+                             "".join(cols[size_column+1:]))
     else:
-        # owner/group column blending for size
-        ownership_output = "".join(cols[size_column-ownership_cols:size_column])
-        sep_str = " " * (MULTI_COL_WIDTH - len(ownership_output + size_str))
-        multicol_output = ownership_output + sep_str + size_output
+        # at least one owner/group column
+        ownership_output = ownership_tweak(cols[size_column-ownership_cols:size_column])
+        ## sep_str = " " * (MULTI_COL_WIDTH - len(ownership_output + size_str))
+        multicol_output = ownership_output + " " + padding + size_output
         return "%s%s%s" % ("".join(cols[0:size_column-ownership_cols]),
                            multicol_output, "".join(cols[size_column+1:]))
 
 
 # == Internal functions ==
-
-def tweak(s, n=0):
+# Recursive function to highlight every second group of 3 digts (starting from
+# the right)
+def tweak(s: Optional[str], n=0) -> Tuple[int, str]:
     if not s:
         return 0, ""
     else:
@@ -42,10 +51,9 @@ def tweak(s, n=0):
             return count + 1, s[0] + s_prime
 
 
-def colorise(s):
+def colorise(s: str) -> str:
     """Colorise integer values using underlines and colorise values with a suffix
-    as ...  ."""
-    import colored
+    using various colours."""
 
     COLOURS = {"E": "purple_1b", "P": "deep_pink_2", "G": "magenta_2b", "M": "indian_red_1c", "K": "tan"}
     try:
@@ -65,3 +73,20 @@ def colorise(s):
             return s
 
 
+def ownership_tweak(cols: Iterable[str]) -> str:
+    """Pad (and truncate if necessary) username/groupname columns."""
+
+    def fragment(s: str) -> str:
+        """Return a username/groupname truncated as per ps(1) if it won't fit."""
+        if len(s) >= ownership_col_width:
+            return s[0:ownership_col_width-2] + "+"
+        else:
+            # Left-justified in a field of one less character than the total column width
+            return "%-*s" % (ownership_col_width-1, s)
+
+    # The first column has one space of pre-padding
+    return " " + "".join(fragment(col.strip()) + " " for col in cols)
+
+
+# *** MODULE MAINLINE ***
+colored.set_tty_aware(False)

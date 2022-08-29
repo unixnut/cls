@@ -26,6 +26,13 @@ Installation
   1. If your *pip* major version is less than 9, run **`pip3 install -U pip && hash -r`**
   1. Run **`pip3 install colorls`** 
 
+TO-DO
+-----
+  + `LINK_COL_WIDTH` (what does this mean??)
+  + Fix inum handling
+  + Check for numeric owner/group
+  + Use `type -a python3` and `unset VIRTUAL_ENV` when in a venv to break out of it
+
 Development
 -----------
 
