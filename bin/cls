@@ -26,6 +26,7 @@
 #   + LINK_COL_WIDTH
 #   + Fix inum handling
 #   + Check for numeric owner/group
+#   + Use `type -a python3` and `unset VIRTUAL_ENV` when in a venv to break out of it
 
 
 self=`basename "$0"`
@@ -94,6 +95,6 @@ fi |
   { if [ "$compact" = y ] ; then
       cat
     else
-      python3 -m colorls.colorls $size_column $inums $ownership_cols
+      python3 -m colorls.cli $size_column $inums $ownership_cols
     fi ; } |
   less -RS --prompt=M"[%pB\\%] ${*//./\\.}"
