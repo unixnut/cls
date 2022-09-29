@@ -1,7 +1,7 @@
-.PHONY: build clean clean-test clean-pyc clean-build docs help sign
+.PHONY: build clean clean-test clean-pyc clean-build docs help sign release
 .DEFAULT_GOAL := help
 
-VERSION = 1.1.0
+VERSION = 1.1.1
 
 PYTHON=python3
 PIPENV_VENV_IN_PROJECT=y
