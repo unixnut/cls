@@ -2,7 +2,7 @@
 
 __author__ = """Alastair Irvine"""
 __email__ = 'alastair@plug.org.au'
-__version__ = '1.1.1'
+__version__ = '1.2.0'
 
 
 
