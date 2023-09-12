@@ -21,10 +21,34 @@ Each command is equivalent to:-
 Installation
 ------------
 
+For this to work, you'll have to edit `.profile` and get it to put
+`.local/bin` into your $PATH .
+
+On older Debian/Ubuntu releases:
+
   1. Run **`pip3 -V`**
   1. If you get a *Command not found* error, run **`sudo apt install python3-pip`** and redo from start
   1. If your *pip* major version is less than 9, run **`pip3 install -U pip && hash -r`**
-  1. Run **`pip3 install colorls`** 
+  1. Run **`pip3 install --user colorls`** 
+  1. If this produces an error message, try again without `--user`
+
+On Debian 12 ("Bookworm") and recent Ubuntu releases, pip3 will fail
+with a "error: externally-managed-environment" message.  Therefore,
+run these commands instead:
+
+  1. **`sudo apt install python3-full pipx`**
+  1. **`pipx install colorls`**
+
+This will create symlinks in `~/.local/bin` similar to what **`pip3 install
+--user`** does, however they point to a Python virtual environment
+created by pipx in `~/.local/pipx/venvs/colorls` .
+
+Upgrades
+--------
+
+To upgrade colorls when using pip, run **`pip3 install -U --user colorls`**
+
+To upgrade colorls when using pipx, run **`pipx upgrade colorls`**
 
 TO-DO
 -----

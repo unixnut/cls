@@ -2,6 +2,7 @@
 
 import re, sys
 
+import colorls  # This package's top-level module
 from .colorls import cols_format
 
 
@@ -37,11 +38,22 @@ def main(args):
     return 0
 
 
-# *** MAINLINE ***
-if __name__ == '__main__':
+def wrapper():
+    try:
+        if sys.argv[1] == "-V":
+            print(colorls.__version__)
+            sys.exit(0)
+    except IndexError:
+        pass
+
     try:
         sys.exit(main(sys.argv))
     except (BrokenPipeError, IOError):
         # Avoid "Exception ignored ..." and "BrokenPipeError: [Errno 32]..."
         # messages from the Python interpreter
         sys.stderr.close()
+
+
+# *** MAINLINE ***
+if __name__ == '__main__':
+    wrapper()

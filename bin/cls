@@ -1,7 +1,7 @@
 #! /bin/bash
 # c*ls  (BASH script) -- Colourised ls wrappers that use a pager
 #
-# Version:   1.2.0
+# Version:   1.3.0
 # Copyright: (c)2019 Alastair Irvine <alastair@plug.org.au>
 # Keywords:  ls less colour color
 # Notice:    
@@ -29,7 +29,7 @@ self=`basename "$0"`
 
 # *** MAINLINE ***
 if [ "$1" = -V ] ; then
-  python3 -c 'import colorls; print(colorls.__version__)'
+  colorls-cli -V
   exit 0
 fi
 
@@ -93,7 +93,7 @@ fi |
   { if [ "$compact" = y ] ; then
       cat
     else
-      python3 -m colorls.cli $size_column $inums $ownership_cols $human
+      colorls-cli $size_column $inums $ownership_cols $human
     fi ; } |
   less -RS --prompt=M"[%pB\\%] ${*//./\\.}"
 

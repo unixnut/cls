@@ -90,6 +90,11 @@ setup(
     keywords='cls, ls, less, colour, color',
     name='colorls',
     packages=find_packages(include=['colorls', 'colorls.*']),
+    entry_points={
+        'console_scripts': [
+            'colorls-cli=colorls.cli:wrapper',
+        ],
+    },
     scripts=['bin/cls'],
     cmdclass={
         'install_scripts': CustomInstallScriptsCommand,
@@ -99,6 +104,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/unixnut/cls',
-    version='1.2.0',
+    version='1.3.0',
     zip_safe=False,
 )
